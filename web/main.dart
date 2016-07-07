@@ -16,6 +16,23 @@ import 'dart:math';
 class Player {
   String name;
   Player(this.name);
+  int wins = 0;
+  int losses = 0;
+//   num get score => this.wins / (this.wins + this.losses);
+  num get score {
+    if (this.wins + this.losses == 0) {
+      return 0.0;
+    }
+    else {
+      return this.wins / (this.wins + this.losses);
+    }
+  }
+  void win() {
+    this.wins++;
+  }
+  void lose() {
+    this.losses++;
+  }
 }
 
 class Location {
@@ -56,11 +73,15 @@ var matchHistory = new List<Match>();
 
 var waitQueue = new ListQueue<Player>();
 
+var rankedList = new List<Player>();
+
 var random = new Random.secure();
 
 void _winner(Match match, Player winner, Player loser) {
   match.loser = loser;
   match.winner = winner;
+  loser.lose();
+  winner.win();
   Player toQueue;
   Player fromQueue = waitQueue.removeFirst();
   if (match.location.loser == loser) {
@@ -87,6 +108,7 @@ void _winner(Match match, Player winner, Player loser) {
   renderMatches(querySelector('#matches'), matches);
   renderQueue(querySelector('#waiting'), waitQueue);
   renderHistory(querySelector('#history'), matchHistory);
+  renderRanking(querySelector('#ranking'), rankedList);
 }
 
 void renderMatches(UListElement container, var matches) {
@@ -128,10 +150,21 @@ void renderQueue(OListElement container, var queue) {
   container.children.clear();
   for (var player in queue) {
     var item = new LIElement();
-    item.text = '${player.name}';
+    item.text = '${player.name} (${player.wins}/${player.losses} :: ${player.score})';
     container.children.add(item);
   }
 }
+
+void renderRanking(OListElement container, var players) {
+  container.children.clear();
+  rankedList.sort((a, b) => b.score.compareTo(a.score));
+  for (var player in rankedList) {
+    var item = new LIElement();
+    item.text = '${player.name} (${player.wins}/${player.losses} :: ${player.score})';
+    container.children.add(item);
+  }
+}
+
 
 void renderHistory(UListElement container, var history) {
   container.children.clear();
@@ -160,6 +193,7 @@ void renderHistory(UListElement container, var history) {
 void main() {
   players.shuffle(random);
   locations.shuffle(random);
+  rankedList.addAll(players);
   int location_idx = 0;
   Player first = null;
   for (var player in players) {
@@ -181,4 +215,5 @@ void main() {
   renderMatches(querySelector('#matches'), matches);
   renderQueue(querySelector('#waiting'), waitQueue);
   renderHistory(querySelector('#history'), matchHistory);
+  renderRanking(querySelector('#ranking'), rankedList);
 }

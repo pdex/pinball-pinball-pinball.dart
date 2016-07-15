@@ -30,15 +30,37 @@
       </li>
 
       <li class="tab">
+        <input id="tab-new-player" type="radio" name="tab-group" />
+        <label for="tab-new-player" class="hidden-label">New Player</label>
+        <div id="tab-content-new-player" class="tab-content">
+          <span id="new-player-name-error"></span><br />
+          <label for="new-player-name">Player Name:</label>
+          <input id="new-player-name" type="text" /><br />
+          <button id="add-new-player" class="large-button">Add</button>
+        </div>
+      </li>
+
+      <li class="tab">
+        <input id="tab-new-machine" type="radio" name="tab-group" />
+        <label for="tab-new-machine" class="hidden-label">New Machine</label>
+        <div id="tab-content-new-machine" class="tab-content">
+          <span id="new-machine-name-error"></span><br />
+          <label for="new-machine-name">Machine Name:</label>
+          <input id="new-machine-name" type="text" /><br />
+          <button id="add-new-machine" class="large-button">Add</button>
+        </div>
+      </li>
+
+      <li class="tab">
         <input id="tab-setup" type="radio" name="tab-group" />
         <label for="tab-setup">Setup</label>
         <div id="tab-content-setup" class="tab-content">
           <div style="text-align: right">
-            <button id="start_playing">Start</button>
+            <button id="start_playing" class="large-button">Start</button>
           </div>
           <div id="setup-players">
             <div id="players_container">
-              <h2>Players</h2>
+              <h2>Players <a id="setup-new-player">New Player</a></h2>
               <ul id='players' class="scrollbox">
                 <li>player</li>
               </ul>
@@ -57,7 +79,7 @@
 
           <div id="setup-machines">
             <div id="machines_container">
-              <h2>Machines</h2>
+              <h2>Machines <a id="setup-new-machine">New Machine</a></h2>
               <ul id='machines' class="scrollbox">
                 <li>machine</li>
               </ul>

@@ -183,3 +183,19 @@ input.hidden-checkbox:checked + label {
 #players_container li {
   list-style: none;
 }
+
+.large-button {
+  font-size: xx-large;
+}
+
+ul.tabs > li.tab > label.hidden-label {
+  display: none;
+}
+
+ul.tabs > li.tab > label.hidden-label {
+  display: none;
+}
+
+.tabs [id^="tab"]:checked + label.hidden-label {
+  display: block;
+}

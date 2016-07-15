@@ -185,11 +185,11 @@ class PinballX3 {
 
   bool started = false;
 
-  var players = [];
+  var players = new SplayTreeMap<String, Player>();
 
   var activePlayers = [];
 
-  var machines = [];
+  var machines = new SplayTreeMap<String, Machine>();
 
   var activeMachines = [];
 
@@ -241,20 +241,29 @@ class PinballX3 {
 
   void renderPlayers(UListElement container) {
     container.children.clear();
-    for (Player player in players) {
-      var item = new LIElement();
+    for (var key in players.keys) {
+      var player = players[key];
 
       void selected(player, item) {
         print('selected - ${player.name}');
 
         activePlayers.add(player);
-        item.style.display = "none";
+        //item.style.display = "none";
         renderActivePlayers();
       }
-      item.nodes.add(build(new CheckboxInputElement(), (e) {e.id = player.id; e.onChange.listen((e) => selected(player, item));}));
-      item.nodes.add(build(new Element.tag('label'), (e) {e.text = player.name; e.htmlFor = player.id;}));
-
-      container.children.add(item);
+      container.nodes.add(build(new CheckboxInputElement(), (e) {
+        e.id = player.id;
+        e.onChange.listen((e) => selected(player, e));
+        e.classes.add("hidden-checkbox");
+        if (activePlayers.contains(player)) {
+          e.checked = true;
+        }
+      }));
+      container.nodes.add(build(new Element.tag('label'), (e) {
+        e.text = player.name;
+        e.htmlFor = player.id;
+        e.classes.add("label-item");
+      }));
     }
   }
 
@@ -263,35 +272,33 @@ class PinballX3 {
     container.children.clear();
 
     for (Player player in activePlayers) {
-      var item = new LIElement();
-
-      Element build(Element e, Function f) {
-        f(e);
-        return e;
-      }
 
       void selected(player) {
         print('selected - ${player.name}');
 
         activePlayers.remove(player);
         var playerItem = querySelector('#${player.id}');
-        print(playerItem);
-        print('checked - ${playerItem.checked}');
         playerItem.checked = false;
-        print('checked - ${playerItem.checked}');
-        playerItem.parent.style.display = "list-item";
+        //playerItem.parent.style.display = "list-item";
         renderActivePlayers();
       }
-      item.nodes.add(build(new CheckboxInputElement(), (e) {e.id = 'active-player-${player.id}'; e.onChange.listen((e) => selected(player));}));
-      item.nodes.add(build(new Element.tag('label'), (e) {e.text = player.name; e.htmlFor = 'active-player-${player.id}';}));
-      container.children.add(item);
+      container.nodes.add(build(new CheckboxInputElement(), (e) {
+                e.id = 'active-player-${player.id}';
+                e.onChange.listen((e) => selected(player));
+                e.classes.add("hidden-checkbox");
+              }));
+      container.nodes.add(build(new Element.tag('label'), (e) {
+                e.text = player.name;
+                e.htmlFor = 'active-player-${player.id}';
+                e.classes.add("label-item");
+              }));
     }
   }
 
   void renderMachines() {
     UListElement container = querySelector('#machines');
     container.children.clear();
-    for (Machine machine in machines) {
+    for (Machine machine in machines.values) {
 
       void selected(machine, item) {
         print('selected - ${machine.name}');
@@ -438,16 +445,40 @@ class PinballX3 {
     print('setupPlayers');
 
     players.clear();
-    for (var player in current["players"]) {
-      players.add(new Player(player["name"]));
+    for (var data in current["players"]) {
+      var player = new Player(data["name"]);
+      players[player.id] = player;
     }
     Completer<Map> completer = new Completer<Map>();
-
-    players.sort((a, b) => a.name.compareTo(b.name));
 
     querySelector('#starting_players').nodes.clear();
     querySelector('#late_players').nodes.clear();
     renderPlayers(querySelector('#players'));
+
+    querySelector('#add-new-player').onClick.listen((_) {
+      var nameInput = querySelector('#new-player-name');
+      var player = new Player(nameInput.value);
+      if (players.containsKey(player.id)) {
+        var error = querySelector('#new-player-name-error');
+        error.text = "A player with the name ${nameInput.value} already exists!";
+      } else {
+        players[player.id] = player;
+        renderPlayers(querySelector('#players'));
+        var tabSetup = querySelector('#tab-setup');
+        tabSetup.checked = true;
+      }
+    });
+
+    var tabNewPlayer = querySelector('#tab-new-player');
+    querySelector('#setup-new-player').onClick.listen((_) {
+      tabNewPlayer.checked = true;
+      // clear error
+      var error = querySelector('#new-player-name-error');
+      error.text = "";
+      // clear name
+      var name = querySelector('#new-player-name');
+      name.value = "";
+    });
 
     completer.complete(current);
 
@@ -459,13 +490,39 @@ class PinballX3 {
     Completer<Map> completer = new Completer<Map>();
 
     machines.clear();
-    for (var machine in current["machines"]) {
-      machines.add(new Machine(machine["name"]));
+    for (var data in current["machines"]) {
+      var machine = new Machine(data["name"]);
+      machines[machine.id] = machine;
     }
 
     querySelector('#starting_machines').nodes.clear();
     querySelector('#replacement_machines').nodes.clear();
     renderMachines();
+
+    querySelector('#add-new-machine').onClick.listen((_) {
+      var nameInput = querySelector('#new-machine-name');
+      var machine = new Machine(nameInput.value);
+      if (machines.containsKey(machine.id)) {
+        var error = querySelector('#new-machine-name-error');
+        error.text = "A machine with the name ${nameInput.value} already exists!";
+      } else {
+        machines[machine.id] = machine;
+        renderMachines();
+        var tabSetup = querySelector('#tab-setup');
+        tabSetup.checked = true;
+      }
+    });
+
+    var tabNewMachine = querySelector('#tab-new-machine');
+    querySelector('#setup-new-machine').onClick.listen((_) {
+      tabNewMachine.checked = true;
+      // clear error
+      var error = querySelector('#new-machine-name-error');
+      error.text = "";
+      // clear name
+      var name = querySelector('#new-machine-name');
+      name.value = "";
+    });
 
     completer.complete(current);
     return completer.future;

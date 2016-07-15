@@ -11,7 +11,7 @@
 
 import 'dart:async';
 import 'dart:collection';
-import 'dart:convert';
+//import 'dart:convert';
 import 'dart:html';
 import 'dart:math';
 import 'package:pinball_pinball_pinball/storage.dart';
@@ -321,7 +321,6 @@ class PinballX3 {
     container.children.clear();
 
     for (Machine machine in activeMachines) {
-      var item = new LIElement();
 
       void selected(machine) {
         print('selected - ${machine.name}');
@@ -469,6 +468,7 @@ class PinballX3 {
     renderMachines();
 
     completer.complete(current);
+    return completer.future;
   }
 
   Future<bool> setup(Map current) {

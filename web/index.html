@@ -6,37 +6,131 @@
 -->
 
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="scaffolded-by" content="https://github.com/google/stagehand">
     <title>Pinball, PinBall, PINBALL</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js"></script>
     <script defer src="main.dart" type="application/dart"></script>
     <script defer src="packages/browser/dart.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
 
-  <div id="output"></div>
+    <ul class="tabs">
+      <li class="tab">
+        <input id="tab-load" type="radio" name="tab-group" checked="checked" />
+        <label for="tab-load">Load</label>
+        <div id="tab-content-load" class="tab-content">
+        </div>
+      </li>
 
-    <div id='matches_container'>
-      <h2>Active Matches</h2>
-      <ul id='matches'></ul>
-    </div>
-    <div id='waiting_container'>
-      <h2>Wait Queue</h2>
-      <ol id='waiting'></ul>
-    </div>
-    <div id='ranking_container'>
-      <h2>Current Rankings</h2>
-      <ol id='ranking'></ol>
-    </div>
-    <div id='history_container'>
-      <h2>Match History</h2>
-      <ul id='history'></ul>
-    </div>
+      <li class="tab">
+        <input id="tab-setup" type="radio" name="tab-group" />
+        <label for="tab-setup">Setup</label>
+        <div id="tab-content-setup" class="tab-content">
+          <div style="text-align: right">
+            <button id="start_playing">Start</button>
+          </div>
+          <div id="setup-players">
+            <div id="players_container">
+              <h2>Players</h2>
+              <ul id='players' class="scrollbox">
+                <li>player</li>
+              </ul>
+            </div>
+            <div id="active_players_container">
+              <h2>Starting Players</h2>
+              <ul id='starting_players' class="half-scrollbox">
+                <li>Nobody here yet</li>
+              </ul>
+              <h2>Late Players</h2>
+              <ul id='late_players' class="half-scrollbox">
+                <li>Everybody on time!</li>
+              </ul>
+            </div>
+          </div>
 
-</body>
+          <div id="setup-machines">
+            <div id="machines_container">
+              <h2>Machines</h2>
+              <ul id='machines' class="scrollbox">
+                <li>machine</li>
+              </ul>
+            </div>
+            <div id="active_machines_container">
+              <h2>Starting Machines</h2>
+              <ul id='starting_machines' class="half-scrollbox">
+                <li>None</li>
+              </ul>
+              <h2>Replacement Machines</h2>
+              <ul id='replacement_machines' class="half-scrollbox">
+                <li>None</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="tab">
+        <input id="tab-matches" type="radio" name="tab-group" />
+        <label for="tab-matches">Matches</label>
+        <div id="tab-content-matches" class="tab-content">
+          <div id='matches_container'>
+            <h2>Active Matches</h2>
+            <ul id='matches'>
+              <li>match</li>
+            </ul>
+          </div>
+          <div id="matches_sidebar">
+            <div>
+              <h2>Recent Updates</h2>
+              <ul id="recent_updates">
+                <li>message</li>
+              </ul>
+            </div>
+            <div id='waiting_container'>
+              <h2>Wait Queue</h2>
+              <ol id='waiting'>
+                <li>wait</li>
+              </ol>
+            </div>
+            <div>
+              <h2>On Break</h2>
+              <ul id="on_break">
+                <li>player</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="tab">
+        <input id="tab-rankings" type="radio" name="tab-group" />
+        <label for="tab-rankings">Rankings</label>
+        <div id="tab-content-rankings" class="tab-content">
+          <div id='ranking_container'>
+            <h2>Current Rankings</h2>
+            <ol id='ranking'></ol>
+          </div>
+        </div>
+      </li>
+
+      <li class="tab">
+        <input id="tab-history" type="radio" name="tab-group" />
+        <label for="tab-history">History</label>
+        <div id="tab-content-history" class="tab-content">
+          <div id='history_container'>
+            <h2>Match History</h2>
+            <ul id='history'></ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+  </body>
 </html>

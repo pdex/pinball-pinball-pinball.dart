@@ -1,0 +1,103 @@
+#container {
+  margin: 0 auto;
+  width: 100%;
+}
+
+#container input {
+        height: 2.5em;
+        visibility: hidden;
+}
+
+#container label {
+        background: #f9f9f9;  /* Fondo de las pestañas */
+        border-radius: .25em .25em 0 0;
+        color: #888;  /* Color del texto de las pestañas */
+        cursor: pointer;
+        display: block;
+        float: left;
+        font-size: 1em;  /* Tamaño del texto de las pestañas */
+        height: 2.5em;
+        line-height: 2.5em;
+        margin-right: .25em;
+        padding: 0 1.5em;
+        text-align: center;
+}
+
+#container input:hover + label {
+        background: #ddd;  /* Fondo de las pestañas al pasar el cursor por encima */
+        color: #666;  /* Color del texto de las pestañas al pasar el cursor por encima */
+}
+
+#container input:checked + label {
+        background: #f1f1f1;  /* Fondo de las pestañas al presionar */
+        color: #444; /* Color de las pestañas al presionar */
+        position: relative;
+        z-index: 6;
+        /*
+        -webkit-transition: .1s;
+        -moz-transition: .1s;
+        -o-transition: .1s;
+        -ms-transition: .1s;
+        */
+}
+
+#content {
+        background: #f1f1f1;  /* Fondo del contenido */
+        border-radius: 0 .25em .25em .25em;
+        min-height: 20em;  /* Alto del contenido */
+        position: relative;
+        width: 100%;
+        z-index: 5;
+}
+
+#content div {
+        opacity: 0;
+        padding: 1.5em;
+        position: absolute;
+        z-index: -100;
+        /*
+        transition: all linear 0.1s;
+        */
+}
+
+#content-matches p {
+        clear: both;
+        margin-bottom: 1em;
+}
+#content-matches p.left img {
+        float: left;
+        margin-right: 1em;
+}
+#content-matches p.last {
+        margin-bottom: 0;
+}
+
+#content-rankings p {
+        float: left;
+        width: 48.5%;
+}
+#content-rankings p.column-right {
+        margin-left: 3%;
+}
+#content-rankings p img {
+        display: block;
+        margin: 0 auto 1em auto;
+}
+#content-history p,
+#content-history ul {
+        margin-bottom: 1em;
+}
+#content-history ul {
+        margin-left: 2em;
+}
+
+#container input#tab-matches:checked ~ #content #content-matches,
+#container input#tab-rankings:checked ~ #content #content-rankings,
+#container input#tab-history:checked ~ #content #content-history {
+    opacity: 1;
+    z-index: 100;
+}
+
+input.visible {
+  visibility: visible !important;
+}

@@ -1,11 +1,19 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
+* {
+  font-family: Arial, sans;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
 
 html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
 }
 
 a {
@@ -14,10 +22,164 @@ a {
   text-decoration: none;
 }
 
-li a {
+.tab-content li a {
   margin-left: 8px;
 }
 
-li span {
+.tab-content li span {
   margin-left: 8px;
+}
+
+/* css tabs */
+
+ul.tabs {
+  width: 650px;
+  float: none;
+  list-style: none;
+  /*
+  position: relative;
+  margin: 80px 0 0 10px;
+  */
+  text-align: left;
+}
+ul.tabs > li.tab {
+  float: left;
+  display: block;
+}
+ul.tabs > li.tab > input[type="radio"] {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+ul.tabs > li.tab > label {
+  display: block;
+  padding: 14px 21px;
+  border-radius: 2px 2px 0 0;
+  font-size: 20px;
+  font-weight: normal;
+  text-transform: uppercase;
+  background: #f9f9f9;
+  color: #888888;
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+ul.tabs > li.tab > label:hover {
+  background: #dddddd;
+  color: #666666;
+}
+.tabs .tab-content {
+  z-index: 2;
+  display: none;
+  overflow: hidden;
+  width: 100%;
+  font-size: 17px;
+  line-height: 25px;
+  padding: 25px;
+  position: absolute;
+  top: 53px;
+  left: 0;
+  background: #f1f1f1;
+}
+.tabs [id^="tab"]:checked + label {
+  top: 0;
+  padding-top: 17px;
+  background: #f1f1f1;
+  color: #444444;
+}
+
+.tabs [id^="tab"]:checked ~ [id^="tab-content"] {
+  display: block;
+}
+
+
+.tab-content {
+  width: 100%;
+}
+
+/* scrollbox */
+
+.scrollbox {
+  height: 400px;
+  overflow: scroll;
+}
+
+.half-scrollbox {
+  overflow: scroll;
+  height: 200px;
+}
+
+/* players */
+
+.left-half {
+  width: 50%;
+}
+
+#setup-players {
+  display: flex;
+  flex-direction: row;
+}
+
+#players_container {
+  width: 50%;
+}
+
+/*
+#active_players_container {
+  height: 400px;
+  overflow: scroll;
+}
+*/
+
+/* machines */
+
+/*
+#machines input[type=checkbox]:checked {
+  display: none;
+}
+*/
+
+
+.hidden-checkbox {
+  display: none;
+}
+
+.label-item {
+  display: list-item;
+}
+
+input.hidden-checkbox:checked + label {
+  display: none;
+}
+
+#setup-machines {
+  display: flex;
+  flex-direction: row;
+}
+
+#machines_container {
+  width: 50%;
+  height: 400px;
+ }
+
+#machines {
+/*
+  overflow: scroll;
+*/
+}
+
+#active_machines_container {
+/*
+  height: 400px;
+  overflow: scroll;
+*/
+}
+
+
+#players_container li {
+  list-style: none;
 }
